@@ -1,18 +1,57 @@
-# Forklaring af hvad der sker i mit PHP kode
+# Image Hover Reveal - WordPress Plugin
 
-I dette stykke PHP kode bruger vi `ob_start();` til at starte output buffering.  
-Det betyder at alt HTML og script der kommer efter, ikke bliver sendt direkte ud til browseren med det samme — det bliver først "fanget" i en buffer.  
-Til sidst bruger vi `return ob_get_clean();` som returnerer hele bufferen som en string.  
-Det gør det muligt at returnere HTML direkte fra funktionen — hvilket er smart når man fx laver shortcodes i WordPress.
+Dette plugin gør det muligt at vise en special visuel image-hover effekt i WordPress.  
+Plugin'et tager udgangspunkt i at man har ét foto (base photo) og én illustration (overlay image). Når brugeren holder musen hen over billedet, vil illustrationen blive afsløret som en "clip reveal" cirkel der følger musens bevægelse.
 
-## Hvad koden gør
-- Sætter output buffering i gang med `ob_start()`
-- Genererer HTML markup for et image hover element (et billede med illustration overlay)
-- Loader foto + illustration
-- Indsætter JS der loader animation / hover effekt når DOM er klar
-- Til sidst `return ob_get_clean()` returnerer hele outputtet som én string så det kan bruges i WordPress (shortcode output)
+Effekten bruges til at skabe mere visuel storytelling, motion feeling og engagement gennem microinteractions — uden tunge animation libraries.
+
+---
+
+## Teknisk forklaring
+
+Plugin'et består af 3 hovedelementer:
+
+- **PHP (image-hover.php)** genererer markup og shortcodes til WordPress.
+- **CSS (image-hover-reveal.css)** styrer layout, transitions og design.
+- **JavaScript (image-hover-reveal.js)** håndterer mouse tracking og animating af clipPath.
+
+### PHP output med `ob_start();`
+I PHP bruger vi `ob_start();` for at starte output buffering.  
+Det betyder, at HTML-output bliver "fanget" i en buffer, og ikke sendt ud med det samme.  
+Til sidst returnerer vi alt med `return ob_get_clean();`.
+
+Dette gør det muligt at returnere samlet HTML/JS output som en **string** fra funktionen — hvilket er nødvendigt når man laver WordPress shortcodes.
+
+---
+
+## Hvordan effekten fungerer
+
+1. Plugin'et genererer en container med to lag — et foto og en illustration ovenpå.
+2. Billedet bliver mørkere ved hover og overlay bliver synlig i et cirkel-område.
+3. JavaScript følger musens position og ændrer dynamisk `clip-path`.
+4. Animationen kører ultra smooth via requestAnimationFrame.
+
+---
+
+## Brugsscenarie
+
+Dette plugin er anvendt for at kunne lave reelle kommercielle portfolio hov-over effekter der visuelt viser forskellen mellem det fotograferede motiv og den tegnede/illustrerede stil ovenpå.
+
+Det er relevant i multimediedesign projekter hvor man arbejder med visuel identitet, art direction og storytelling.
+
+---
+
+## Filstruktur
+
+| Fil | Funktion |
+|-----|-----------|
+| image-hover.php | Shortcode, PHP logic, buffer output |
+| image-hover-reveal.css | Styling og transitions |
+| image-hover-reveal.js | Mouse movement + reveal animation |
+
+---
+
+## Shortcode eksempel
 
 ```php
-ob_start();
-// ... HTML + JS + PHP output ...
-return ob_get_clean();
+[image_hover photo="img.jpg" illustration="illu.png" width="100%" max_width="900px"]
