@@ -1,57 +1,71 @@
-# Image Hover Reveal - WordPress Plugin
+# Image Hover Reveal Plugin (Storyscaping Eksamen)
 
-Dette plugin gør det muligt at vise en special visuel image-hover effekt i WordPress.  
-Plugin'et tager udgangspunkt i at man har ét foto (base photo) og én illustration (overlay image). Når brugeren holder musen hen over billedet, vil illustrationen blive afsløret som en "clip reveal" cirkel der følger musens bevægelse.
+Dette plugin viser et billede med en overlay illustration, som afsløres med en x-ray lignende cirkel når brugeren hover. Det bruges på vores About-side for at skabe et professionelt visuelt storytelling element.
 
-Effekten bruges til at skabe mere visuel storytelling, motion feeling og engagement gennem microinteractions — uden tunge animation libraries.
-
----
-
-## Teknisk forklaring
-
-Plugin'et består af 3 hovedelementer:
-
-- **PHP (image-hover.php)** genererer markup og shortcodes til WordPress.
-- **CSS (image-hover-reveal.css)** styrer layout, transitions og design.
-- **JavaScript (image-hover-reveal.js)** håndterer mouse tracking og animating af clipPath.
-
-### PHP output med `ob_start();`
-I PHP bruger vi `ob_start();` for at starte output buffering.  
-Det betyder, at HTML-output bliver "fanget" i en buffer, og ikke sendt ud med det samme.  
-Til sidst returnerer vi alt med `return ob_get_clean();`.
-
-Dette gør det muligt at returnere samlet HTML/JS output som en **string** fra funktionen — hvilket er nødvendigt når man laver WordPress shortcodes.
+Funktionaliteten ligger primært i **CSS** og **JavaScript**, mens PHP delen sørger for integration i WordPress + shortcode output.
 
 ---
 
-## Hvordan effekten fungerer
+## Funktion & idé
 
-1. Plugin'et genererer en container med to lag — et foto og en illustration ovenpå.
-2. Billedet bliver mørkere ved hover og overlay bliver synlig i et cirkel-område.
-3. JavaScript følger musens position og ændrer dynamisk `clip-path`.
-4. Animationen kører ultra smooth via requestAnimationFrame.
+Pluginet består af 2 lag:
 
----
+1. Base Photo (originalt billede)
+2. Illustration (håndtegnet look)
 
-## Brugsscenarie
-
-Dette plugin er anvendt for at kunne lave reelle kommercielle portfolio hov-over effekter der visuelt viser forskellen mellem det fotograferede motiv og den tegnede/illustrerede stil ovenpå.
-
-Det er relevant i multimediedesign projekter hvor man arbejder med visuel identitet, art direction og storytelling.
+Når man holder musen henover billedet, dæmpes fotoet og illustrationen afsløres i en cirkel der følger musens bevægelse. Det giver en “x-ray reveal” effekt og understøtter Storyscaping visuelt.
 
 ---
 
-## Filstruktur
+## Brug af AI i processen
 
-| Fil | Funktion |
-|-----|-----------|
-| image-hover.php | Shortcode, PHP logic, buffer output |
-| image-hover-reveal.css | Styling og transitions |
-| image-hover-reveal.js | Mouse movement + reveal animation |
+AI har været brugt som sparringspartner gennem hele udviklingen, hvor jeg beskrev det visuelle mål, designstil og ønsket interaktion. AI blev brugt til optimering af struktur og teknisk kode, men designet og valg af løsning er beslutninger taget bevidst ud fra vores koncept.
 
 ---
 
-## Shortcode eksempel
+## PHP Struktur
+
+PHP delen er opdelt i 2 dele:
+
+- Formelle sikkerhedsting (f.eks. `if (!defined('ABSPATH')) exit;` så filen ikke kan tilgås direkte)
+- Selve plugin logikken
+
+Alt ligger samlet i en Class (`class ImageHoverReveal`).
+
+### Det vigtigste der sker i PHP:
+
+- Constructoren kører når plugin’et initialiseres og:
+  - gemmer plugin URL
+  - loader CSS + JS via `wp_enqueue_scripts`
+  - registrerer shortcoden `[image_hover_reveal]`
+
+- `enqueue_assets()` sørger for at CSS + JS ligger klar på frontend
+
+- `shortcode()`:
+  - sætter standard values
+  - danner sti til foto + illustration
+  - genererer unikt ID pr instance
+  - (senere bygges HTML output via ob_start / ob_get_clean)
+
+---
+
+## CSS Struktur / Visuel Effekt
+
+Containeren `.image-hover-container` definerer rammerne: dimensioner, overflow hidden og cursor pointer. Begge billeder ligger absolut positioneret ovenpå hinanden i samme container.
+
+Base Photo og Illustration Overlay har hver deres z-index, transitions og object-fit setup, så de fylder containeren korrekt.
+
+Når man hover:
+- Base Photo fades til 25% opacity
+- Overlayet vises via `clip-path: circle(...)` og JavaScript opdaterer denne cirkel live efter musens position
+
+Dette skaber x-ray effekten.
+
+Der er også responsivitet så på mobil ændres cursor til default, og max-width kører fuld width.
+
+---
+
+## Shortcode Eksempel
 
 ```php
-[image_hover photo="img/photo.jpg" illustration="img/illustration.png" width="100%" max_width="900px"]
+[image_hover_reveal photo="demo.jpg" illustration="demo-illu.png" width="100%" max_width="950px"]
