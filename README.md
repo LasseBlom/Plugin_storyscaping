@@ -54,4 +54,4 @@ Det er relevant i multimediedesign projekter hvor man arbejder med visuel identi
 ## Shortcode eksempel
 
 ```php
-[image_hover photo="img.jpg" illustration="illu.png" width="100%" max_width="900px"]
+[image_hover photo="img/photo.jpg" illustration="img/illustration.png" width="100%" max_width="900px"]
