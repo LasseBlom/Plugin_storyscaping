@@ -63,7 +63,9 @@ Sætter standardattributter, danner billed-URLs og genererer unikt ID pr. instan
 
 ---
 
-## PHP — del 2 (output og `ob_start()`)
+## PHP — del 2 (output og `ob_start()`med Html )
+
+### `ob_start()`
 
 ```php
 ob_start();
@@ -73,6 +75,43 @@ return ob_get_clean();
 `ob_start()` starter **output buffering**.
 HTML markup skrives i buffer og returneres samlet når shortcoden kører. 
 Markup består af container + foto + illustration + lille init script.
+
+### html
+
+```html
+        <div class="image-hover-container" 
+             id="<?php echo esc_attr($unique_id); ?>"
+             style="width: <?php echo esc_attr($atts['width']); ?>; max-width: <?php echo esc_attr($atts['max_width']); ?>;">
+            <div class="photo-base">
+                <img src="<?php echo esc_url($photo_url); ?>" 
+                     alt=""
+                     loading="lazy">
+            </div>
+            
+            <div class="illustration-overlay">
+                <img src="<?php echo esc_url($illustration_url); ?>" 
+                     alt=""
+                     loading="lazy">
+            </div>
+        </div>
+        
+        <script>
+        (function() {
+            function initHover() {
+                if (typeof ImageHoverReveal !== 'undefined') {
+                    ImageHoverReveal.init('<?php echo esc_js($unique_id); ?>');
+                } else {
+                    setTimeout(initHover, 100);
+                }
+            }
+            
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initHover);
+            } else {
+                initHover();
+            }
+        })();
+```
 
 ---
 
@@ -131,4 +170,4 @@ Container bliver full width og cursor default på mobil.
 ---
 
 ## AI Note
-AI blev brugt som sparring og strukturhjælp — designvalg og implementering er manuelt udført.
+AI har været brugt som sparringspartner igennem udviklingen af dette plugin. Jeg har anvendt AI til at strukturere min kode bedre, få hjælp til at validere løsningsmuligheder og til at få tekniske forslag til hvordan effekten kunne implementeres mest optimalt. Designbeslutninger, koncept, visuel retning og den endelige kodeimplementering er udført, vurderet og manuelt tilpasset af mig selv. AI har derfor fungeret som et støtteværktøj og ikke som en automatisk generator af løsningen.
