@@ -1,5 +1,10 @@
 # Image Hover Reveal Plugin (Storyscaping Eksamen)
 
+###### Lasse Blom Nielsen  
+###### Multimediedesigner studerende Erhvervs akadamiet Aarhus 
+###### 2025
+
+---
 Plugin’et viser et billede med en illustration ovenpå, som afsløres med en x-ray cirkel ved hover.  
 PHP binder det ind i WordPress via en shortcode. CSS og JavaScript skaber hele den visuelle og interaktive effekt.
 
