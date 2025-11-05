@@ -1,10 +1,10 @@
 <?php
 /**
  * Plugin Name: Image Hover Reveal Effect
- * Plugin URI: https://yourwebsite.com
- * Description: A smooth radial reveal effect that transitions from photography to illustration on hover
- * Version: 1.0.0
- * Author: Your Name
+ * Plugin URI: https://rfo.mikkelsdesign.dk/
+ * Description: En glat radial afsløringseffekt, der skifter fra fotografi til illustration ved hover
+ * Version: 1.0.3
+ * Author: Lasse Blom Nielsen
  * License: GPL v2 or later
  */
 
