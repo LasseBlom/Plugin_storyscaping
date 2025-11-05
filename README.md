@@ -143,10 +143,6 @@ Container styrer dimensioner og clipping.
 ```css
 .image-hover-container:hover .photo-base { opacity: .25; }
 ```
-
-**Responsivitet**
-Container bliver full width og cursor default på mobil.
-
 ---
 
 ## JavaScript funktioner
