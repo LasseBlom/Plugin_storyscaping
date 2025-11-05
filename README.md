@@ -3,6 +3,8 @@
 Plugin’et viser et billede med en illustration ovenpå, som afsløres med en x-ray cirkel ved hover.  
 PHP binder det ind i WordPress via en shortcode. CSS og JavaScript skaber hele den visuelle og interaktive effekt.
 
+![Hover Effekt](readmemedia/plugin-ezgif.com-video-to-gif-converter.gif)
+
 ---
 
 ## Opbygning (idé)
@@ -103,7 +105,7 @@ Container bliver full width og cursor default på mobil.
 
 ---
 
-## JavaScript — funktioner (kort)
+## JavaScript funktioner
 
 | Funktion | Forklaring |
 |----------|-------------|
@@ -121,7 +123,7 @@ Container bliver full width og cursor default på mobil.
 
 ---
 
-## Shortcode (brug)
+## Shortcode
 ```php
 [image_hover_reveal photo="foto.jpg" illustration="illustration.png" width="100%" max_width="950px"]
 ```
